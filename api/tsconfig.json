@@ -1,0 +1,29 @@
+{
+  "resolveJsonModule": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2016",
+    "lib": ["ES2015", "ES2016", "DOM"],
+    "outDir": "./build",
+    "rootDirs": ["./src"],
+    "strict": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@modules/*": ["modules/*"],
+      "@config/*": ["config/*"],
+      "@shared/*": ["shared/*"]
+    }
+  },
+  "exclude": ["node_modules", "build", "tsconfig.json"],
+  "include": ["src/**/*.ts"]
+}
