@@ -5,5 +5,5 @@ export type IEventsRepository = {
   findById(id: number): Promise<SportEvent | null>;
   create(name: string, odds: number): Promise<SportEvent>;
   update(id: number, name: string, odds: number): Promise<SportEvent>;
-  // delete(): Promise<void>;
+  delete(id: number): Promise<void>;
 };

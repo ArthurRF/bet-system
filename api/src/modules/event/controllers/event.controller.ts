@@ -4,6 +4,7 @@ import { constants } from 'http2';
 import { Inject, Service } from 'typedi';
 import { UpdateEventDto } from '../dtos/update-event.dtos';
 import { CreateEventUsecase } from '../usecases/create-event.usecase';
+import { DeleteEventUsecase } from '../usecases/delete-event.usecase';
 import { ListEventsUsecase } from '../usecases/list-events.usecase';
 import { UpdateEventUsecase } from '../usecases/update-event.usecase';
 
@@ -15,7 +16,9 @@ export class EventController {
     @Inject(() => CreateEventUsecase)
     private createEventUsecase: CreateEventUsecase,
     @Inject(() => UpdateEventUsecase)
-    private updateEventUsecase: UpdateEventUsecase
+    private updateEventUsecase: UpdateEventUsecase,
+    @Inject(() => DeleteEventUsecase)
+    private deleteEventUsecase: DeleteEventUsecase
   ) {}
 
   async list(req: Request, res: Response): Promise<Response> {
@@ -86,7 +89,24 @@ export class EventController {
 
   async delete(req: Request, res: Response): Promise<Response> {
     try {
-      return res.status(200).json('teste');
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(constants.HTTP_STATUS_BAD_REQUEST).json({
+          message: 'id is required',
+        });
+      }
+
+      const parsedId = Number(id);
+      if (Number.isNaN(parsedId)) {
+        return res.status(constants.HTTP_STATUS_BAD_REQUEST).json({
+          message: 'id is invalid',
+        });
+      }
+
+      await this.deleteEventUsecase.execute(parsedId);
+
+      return res.status(constants.HTTP_STATUS_OK).send();
     } catch (error) {
       console.error(error);
       return res

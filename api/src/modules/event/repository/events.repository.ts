@@ -31,4 +31,8 @@ export class EventsRepository implements IEventsRepository {
     event.odds = odds;
     return this.dbConnection.manager.save(event);
   }
+
+  async delete(id: number): Promise<void> {
+    await this.dbConnection.manager.delete(SportEvent, id);
+  }
 }
