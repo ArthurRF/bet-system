@@ -1,4 +1,4 @@
-export interface IListEventsResponse {
-  id: number;
-  title: string;
-}
+export type IListEventsResponse = {
+  event_id: number;
+  event_name: string;
+};

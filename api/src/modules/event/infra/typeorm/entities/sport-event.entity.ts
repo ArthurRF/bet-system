@@ -2,12 +2,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class SportEvent {
-  @PrimaryGeneratedColumn()
-  event_id: number;
+  @PrimaryGeneratedColumn({
+    name: 'event_id',
+  })
+  eventId: number;
 
-  @Column()
-  event_name: string;
+  @Column({
+    name: 'event_name',
+  })
+  eventName: string;
 
-  @Column({ type: 'float' })
+  @Column({ name: 'odds', type: 'float' })
   odds: number;
 }
