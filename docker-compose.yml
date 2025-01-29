@@ -36,16 +36,20 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      wait_for_db:
-        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
 
-  wait_for_db:
-    image: atkrad/wait4x
-    depends_on:
-      - postgres
-    command: tcp postgres:5432 -t 30s -i 250ms
+  bet-system-web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: bet-system-web
     networks:
       - mynet
+    ports:
+      - "5173:5173"
+    depends_on:
+      - bet-system-api
 
 volumes:
   postgres_data:

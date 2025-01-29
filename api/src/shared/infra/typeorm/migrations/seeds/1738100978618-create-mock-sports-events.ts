@@ -9,7 +9,7 @@ export class CreateMockSportsEvents1738100978618 implements MigrationInterface {
 				('Soccer: Team C vs. Team D', 1.5),
 				('Soccer: Team E vs. Team F', 1.8),
 				('Volleyball: Team G vs. Team H', 2.1),
-				('Basketball: Team I vs. Team J', 0.9)
+				('Basketball: Team I vs. Team J', 1.9)
 		`);
   }
 

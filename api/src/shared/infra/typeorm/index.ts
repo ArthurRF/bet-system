@@ -13,6 +13,4 @@ export const DatabaseDataSource = new DataSource({
     'src/shared/infra/typeorm/migrations/*.ts',
     'src/shared/infra/typeorm/migrations/seeds/*.ts',
   ],
-  logging: true,
-  synchronize: true,
 });
