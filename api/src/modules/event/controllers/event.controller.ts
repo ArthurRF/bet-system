@@ -2,8 +2,10 @@ import { CreateEventDto } from '@modules/event/dtos/create-event.dtos';
 import { Request, Response } from 'express';
 import { constants } from 'http2';
 import { Inject, Service } from 'typedi';
+import { UpdateEventDto } from '../dtos/update-event.dtos';
 import { CreateEventUsecase } from '../usecases/create-event.usecase';
 import { ListEventsUsecase } from '../usecases/list-events.usecase';
+import { UpdateEventUsecase } from '../usecases/update-event.usecase';
 
 @Service()
 export class EventController {
@@ -11,7 +13,9 @@ export class EventController {
     @Inject(() => ListEventsUsecase)
     private listEventsUsecase: ListEventsUsecase,
     @Inject(() => CreateEventUsecase)
-    private createEventUsecase: CreateEventUsecase
+    private createEventUsecase: CreateEventUsecase,
+    @Inject(() => UpdateEventUsecase)
+    private updateEventUsecase: UpdateEventUsecase
   ) {}
 
   async list(req: Request, res: Response): Promise<Response> {
@@ -19,11 +23,13 @@ export class EventController {
       const result = await this.listEventsUsecase.execute();
 
       return res.status(constants.HTTP_STATUS_OK).json(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       return res
-        .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
-        .json({ message: 'Internal server error' });
+        .status(
+          error?.statusCode || constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
+        )
+        .json({ message: error?.message || 'Internal server error' });
     }
   }
 
@@ -32,22 +38,49 @@ export class EventController {
       const { name, odds }: CreateEventDto = req.body;
       const result = await this.createEventUsecase.execute(name, odds);
       return res.status(constants.HTTP_STATUS_CREATED).json(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       return res
-        .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
-        .json({ message: 'Internal server error' });
+        .status(
+          error?.statusCode || constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
+        )
+        .json({ message: error?.message || 'Internal server error' });
     }
   }
 
   async update(req: Request, res: Response): Promise<Response> {
     try {
-      return res.status(200).json('teste');
-    } catch (error) {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(constants.HTTP_STATUS_BAD_REQUEST).json({
+          message: 'id is required',
+        });
+      }
+
+      const parsedId = Number(id);
+      if (Number.isNaN(parsedId)) {
+        return res.status(constants.HTTP_STATUS_BAD_REQUEST).json({
+          message: 'id is invalid',
+        });
+      }
+
+      const { name, odds }: UpdateEventDto = req.body;
+
+      const result = await this.updateEventUsecase.execute(
+        parsedId,
+        name,
+        odds
+      );
+
+      return res.status(constants.HTTP_STATUS_OK).json(result);
+    } catch (error: any) {
       console.error(error);
       return res
-        .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
-        .json({ message: 'Internal server error' });
+        .status(
+          error?.statusCode || constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
+        )
+        .json({ message: error?.message || 'Internal server error' });
     }
   }
 
