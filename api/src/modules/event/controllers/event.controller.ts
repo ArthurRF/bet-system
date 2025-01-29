@@ -1,3 +1,4 @@
+import { CreateEventDto } from '@modules/event/dtos/create-event.dtos';
 import { Request, Response } from 'express';
 import { constants } from 'http2';
 import { Inject, Service } from 'typedi';
@@ -28,7 +29,7 @@ export class EventController {
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
-      const { name, odds } = req.body;
+      const { name, odds }: CreateEventDto = req.body;
       const result = await this.createEventUsecase.execute(name, odds);
       return res.status(constants.HTTP_STATUS_CREATED).json(result);
     } catch (error) {
