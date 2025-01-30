@@ -1,6 +1,9 @@
 import { EventController } from '@modules/event/controllers/event.controller';
 import { ICreateEventRequest } from '@modules/event/dtos/create-event.dtos';
 import { IUpdateEventRequest } from '@modules/event/dtos/update-event.dtos';
+import { UserController } from '@modules/user/controllers/user.controller';
+import { ICreateUserRequest } from '@modules/user/dtos/create-user.dtos';
+import { ILoginUserRequest } from '@modules/user/dtos/login-user.dtos';
 import { Router } from 'express';
 import Container from 'typedi';
 import { bodyValidate } from '../middlewares/body-validate.middleware';
@@ -8,7 +11,9 @@ import { bodyValidate } from '../middlewares/body-validate.middleware';
 const routes = Router();
 
 const eventController = Container.get(EventController);
+const userController = Container.get(UserController);
 
+// events routes
 routes.get('/api/events', eventController.list.bind(eventController));
 routes.post(
   '/api/events',
@@ -21,5 +26,17 @@ routes.put(
   eventController.update.bind(eventController)
 );
 routes.delete('/api/events/:id', eventController.delete.bind(eventController));
+
+// user routes
+routes.post(
+  '/api/users',
+  bodyValidate(ICreateUserRequest),
+  userController.create.bind(userController)
+);
+routes.post(
+  '/api/users/login',
+  bodyValidate(ILoginUserRequest),
+  userController.login.bind(userController)
+);
 
 export default routes;

@@ -32,7 +32,7 @@ export class EventController {
         .status(
           error?.statusCode || constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
         )
-        .json({ message: error?.message || 'Internal server error' });
+        .json({ message: error?.message || 'internal server error' });
     }
   }
 
@@ -47,7 +47,7 @@ export class EventController {
         .status(
           error?.statusCode || constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
         )
-        .json({ message: error?.message || 'Internal server error' });
+        .json({ message: error?.message || 'internal server error' });
     }
   }
 
@@ -83,7 +83,7 @@ export class EventController {
         .status(
           error?.statusCode || constants.HTTP_STATUS_INTERNAL_SERVER_ERROR
         )
-        .json({ message: error?.message || 'Internal server error' });
+        .json({ message: error?.message || 'internal server error' });
     }
   }
 
@@ -111,7 +111,7 @@ export class EventController {
       console.error(error);
       return res
         .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
-        .json({ message: 'Internal server error' });
+        .json({ message: 'internal server error' });
     }
   }
 }

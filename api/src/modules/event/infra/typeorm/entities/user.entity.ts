@@ -6,20 +6,22 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
-export class SportEvent {
-  @PrimaryGeneratedColumn({
-    name: 'event_id',
+@Entity({ name: 'users' })
+export class User {
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'user_id',
   })
-  eventId: number;
+  userId: string;
 
   @Column({
-    name: 'event_name',
+    name: 'username',
   })
-  eventName: string;
+  username: string;
 
-  @Column({ name: 'odds', type: 'float' })
-  odds: number;
+  @Column({
+    name: 'password',
+  })
+  password: string;
 
   @CreateDateColumn({
     name: 'created_at',
