@@ -1,3 +1,5 @@
+import { BetController } from '@modules/bet/controllers/bet.controller';
+import { ICreateBetRequest } from '@modules/bet/dtos/create-bet.dtos';
 import { EventController } from '@modules/event/controllers/event.controller';
 import { ICreateEventRequest } from '@modules/event/dtos/create-event.dtos';
 import { IUpdateEventRequest } from '@modules/event/dtos/update-event.dtos';
@@ -14,6 +16,7 @@ InjectDependencies();
 
 const userController = Container.get<UserController>('UserController');
 const eventController = Container.get<EventController>('EventController');
+const betController = Container.get<BetController>('BetController');
 
 // events routes
 routes.get('/api/events', eventController.list.bind(eventController));
@@ -40,5 +43,13 @@ routes.post(
   bodyValidate(ILoginUserRequest),
   userController.login.bind(userController)
 );
+
+// bet routes
+routes.post(
+  '/api/bets',
+  bodyValidate(ICreateBetRequest),
+  betController.create.bind(betController)
+);
+routes.get('/api/bets', betController.login.bind(betController));
 
 export default routes;

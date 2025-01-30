@@ -1,3 +1,7 @@
+import { BetController } from '@modules/bet/controllers/bet.controller';
+import { BetsRepository } from '@modules/bet/repository/bets.repository';
+import { CreateBetUsecase } from '@modules/bet/usecases/create-bet.usecase';
+import { ListBetsUsecase } from '@modules/bet/usecases/list-bets.usecase';
 import { EventController } from '@modules/event/controllers/event.controller';
 import { EventsRepository } from '@modules/event/repository/events.repository';
 import { CreateEventUsecase } from '@modules/event/usecases/create-event.usecase';
@@ -31,8 +35,14 @@ const InjectDependencies = (): void => {
     loginUserUsecase
   );
 
+  const betsRepository = new BetsRepository();
+  const createBetUsecase = new CreateBetUsecase(betsRepository);
+  const listBetsUsecase = new ListBetsUsecase(betsRepository);
+  const betController = new BetController(createBetUsecase, listBetsUsecase);
+
   Container.set('EventController', eventController);
   Container.set('UserController', userController);
+  Container.set('BetController', betController);
 };
 
 export { InjectDependencies };

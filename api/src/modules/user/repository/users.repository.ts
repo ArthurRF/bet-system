@@ -1,7 +1,7 @@
-import { User } from '@modules/event/infra/typeorm/entities/user.entity';
 import { DatabaseDataSource } from '@shared/infra/typeorm';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import { User } from '../infra/typeorm/entities/user.entity';
 import { IUsersRepository } from './interfaces/users.repository';
 
 // This secret can be moved to an secret manager service

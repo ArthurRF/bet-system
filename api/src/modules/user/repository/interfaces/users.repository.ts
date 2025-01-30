@@ -1,4 +1,4 @@
-import { User } from '@modules/event/infra/typeorm/entities/user.entity';
+import { User } from '@modules/user/infra/typeorm/entities/user.entity';
 
 export type IUsersRepository = {
   findByUsername(username: string): Promise<User | null>;
