@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { parseCookies } from "nookies";
 import React, { useState } from "react";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import { SportEvent } from "../types";
@@ -76,10 +77,29 @@ const BetModal: React.FC<Props> = ({ open, onClose, event }) => {
     }
 
     try {
-      await new Promise((resolve) => {
-        setDisabledInput(true);
-        setTimeout(resolve, 200);
+      setDisabledInput(true);
+      const url = import.meta.env.VITE_API_BASE_URL
+        ? `${import.meta.env.VITE_API_BASE_URL}/bets`
+        : "http://localhost:4000/api/bets";
+
+      const user_id = parseCookies()["bets@user_id"];
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id,
+          event_id: event.event_id,
+          value: numericAmount,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to place bet");
+      }
+
       setSuccess(true);
       setError(null);
       setTimeout(() => {
@@ -90,6 +110,7 @@ const BetModal: React.FC<Props> = ({ open, onClose, event }) => {
       }, 1500);
     } catch (err) {
       console.error(err);
+      setDisabledInput(false);
       setError("Failed to place bet. Please try again.");
     }
   };
@@ -125,7 +146,13 @@ const BetModal: React.FC<Props> = ({ open, onClose, event }) => {
               fullWidth
               disabled={disabledInput}
             />
-            <Button type="submit" variant="contained" color="primary" fullWidth>
+            <Button
+              disabled={disabledInput}
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
               Place Bet
             </Button>
             {success && (

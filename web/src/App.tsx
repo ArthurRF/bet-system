@@ -21,7 +21,7 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
-  const isAuthenticated = !!parseCookies().token;
+  const isAuthenticated = !!parseCookies()["bets@token"];
 
   return (
     <ThemeProvider theme={theme}>

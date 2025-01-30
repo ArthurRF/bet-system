@@ -58,10 +58,14 @@ const Login: React.FC = () => {
       });
       if (!response.ok) throw new Error("Failed to login");
 
-      const { token }: LoginResponse = await response.json();
+      const { token, user_id }: LoginResponse = await response.json();
 
       if (token) {
-        setCookie(null, "token", token, {
+        setCookie(null, "bets@token", token, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 30,
+        });
+        setCookie(null, "bets@user_id", user_id, {
           path: "/",
           maxAge: 60 * 60 * 24 * 30,
         });
