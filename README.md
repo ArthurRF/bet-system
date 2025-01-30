@@ -16,9 +16,15 @@ Ensure you have the following tools installed:
 - [Docker](https://www.docker.com/)  
 - [Docker Compose](https://docs.docker.com/compose/)  
 
-### Clone the Repository
+### Clone the Repository using SSH
 ```bash
-git clone <repository-url>
+git clone git@github.com:ArthurRF/bet-system.git
+cd bet-system
+```
+
+### Or Clone the Repository using HTTPS
+```bash
+git clone https://github.com/ArthurRF/bet-system.git
 cd bet-system
 ```
 
