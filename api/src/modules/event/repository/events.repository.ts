@@ -1,38 +1,48 @@
 import { DatabaseDataSource } from '@shared/infra/typeorm';
-import { Service } from 'typedi';
 import { SportEvent } from '../infra/typeorm/entities/sport-event.entity';
 import { IEventsRepository } from './interfaces/events.repository';
 
-@Service()
 export class EventsRepository implements IEventsRepository {
   constructor(private dbConnection = DatabaseDataSource) {}
 
   async list(): Promise<SportEvent[]> {
-    return this.dbConnection.manager.find(SportEvent);
+    const events: Array<SportEvent> = await this.dbConnection.manager.query(
+      'SELECT * FROM sport_event'
+    );
+
+    return events;
   }
 
   async findById(id: number): Promise<SportEvent | null> {
-    return this.dbConnection.manager.findOne(SportEvent, {
-      where: { eventId: id },
-    });
+    const event: Array<SportEvent> = await this.dbConnection.manager.query(
+      'SELECT * FROM sport_event WHERE event_id = $1',
+      [id]
+    );
+    return event[0];
   }
 
   async create(name: string, odds: number): Promise<SportEvent> {
-    const event = new SportEvent();
-    event.eventName = name;
-    event.odds = odds;
-    return this.dbConnection.manager.save(event);
+    const event: Array<SportEvent> = await this.dbConnection.manager.query(
+      'INSERT INTO sport_event (event_name, odds) VALUES ($1, $2) RETURNING *',
+      [name, odds]
+    );
+
+    return event[0];
   }
 
   async update(id: number, name: string, odds: number): Promise<SportEvent> {
-    const event = new SportEvent();
-    event.eventId = id;
-    event.eventName = name;
-    event.odds = odds;
-    return this.dbConnection.manager.save(event);
+    const [event]: Array<SportEvent[]> = await this.dbConnection.manager.query(
+      'UPDATE sport_event SET event_name = $1, odds = $2 WHERE event_id = $3 RETURNING *',
+      [name, odds, id]
+    );
+
+    return event[0];
   }
 
   async delete(id: number): Promise<void> {
-    await this.dbConnection.manager.delete(SportEvent, id);
+    await this.dbConnection.manager.query(
+      'DELETE FROM sport_event WHERE event_id = $1',
+      [id]
+    );
   }
 }

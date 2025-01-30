@@ -2,23 +2,17 @@ import { CreateEventDto } from '@modules/event/dtos/create-event.dtos';
 import { AppError } from '@shared/errors/app.error';
 import { Request, Response } from 'express';
 import { constants } from 'http2';
-import { Inject, Service } from 'typedi';
 import { UpdateEventDto } from '../dtos/update-event.dtos';
 import { CreateEventUsecase } from '../usecases/create-event.usecase';
 import { DeleteEventUsecase } from '../usecases/delete-event.usecase';
 import { ListEventsUsecase } from '../usecases/list-events.usecase';
 import { UpdateEventUsecase } from '../usecases/update-event.usecase';
 
-@Service()
 export class EventController {
   constructor(
-    @Inject(() => ListEventsUsecase)
     private listEventsUsecase: ListEventsUsecase,
-    @Inject(() => CreateEventUsecase)
     private createEventUsecase: CreateEventUsecase,
-    @Inject(() => UpdateEventUsecase)
     private updateEventUsecase: UpdateEventUsecase,
-    @Inject(() => DeleteEventUsecase)
     private deleteEventUsecase: DeleteEventUsecase
   ) {}
 

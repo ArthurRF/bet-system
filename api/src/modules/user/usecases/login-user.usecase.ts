@@ -1,15 +1,9 @@
 import { AppError } from '@shared/errors/app.error';
-import { Inject, Service } from 'typedi';
 import { ICreateUserResponse } from '../dtos/create-user.dtos';
 import { IUsersRepository } from '../repository/interfaces/users.repository';
-import { UsersRepository } from '../repository/users.repository';
 
-@Service()
 export class LoginUserUsecase {
-  constructor(
-    @Inject(() => UsersRepository)
-    private usersRepository: IUsersRepository
-  ) {}
+  constructor(private usersRepository: IUsersRepository) {}
 
   async execute(
     username: string,
@@ -30,10 +24,10 @@ export class LoginUserUsecase {
       throw new AppError('invalid password');
     }
 
-    const token = this.usersRepository.generateToken(userFound.userId);
+    const token = this.usersRepository.generateToken(userFound.user_id);
 
     return {
-      user_id: userFound.userId,
+      user_id: userFound.user_id,
       token,
     };
   }

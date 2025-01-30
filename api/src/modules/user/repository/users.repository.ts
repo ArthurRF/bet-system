@@ -2,7 +2,6 @@ import { User } from '@modules/event/infra/typeorm/entities/user.entity';
 import { DatabaseDataSource } from '@shared/infra/typeorm';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { Service } from 'typedi';
 import { IUsersRepository } from './interfaces/users.repository';
 
 // This secret can be moved to an secret manager service
@@ -10,21 +9,31 @@ import { IUsersRepository } from './interfaces/users.repository';
 const JWT_SECRET = 'bet-system-secret';
 const JWT_EXPIRATION = '12h';
 
-@Service()
 export class UsersRepository implements IUsersRepository {
   constructor(private dbConnection = DatabaseDataSource) {}
 
   async findByUsername(username: string): Promise<User | null> {
-    return this.dbConnection.manager.findOne(User, {
-      where: { username },
-    });
+    let user = null;
+
+    const result: Array<User> = await this.dbConnection.manager.query(
+      'SELECT * FROM users WHERE username = $1',
+      [username]
+    );
+
+    if (result.length > 0) {
+      [user] = result;
+    }
+
+    return user;
   }
 
   async create(username: string, password: string): Promise<User> {
-    const user = new User();
-    user.username = username;
-    user.password = password;
-    return this.dbConnection.manager.save(user);
+    const user: Array<User> = await this.dbConnection.manager.query(
+      'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *',
+      [username, password]
+    );
+
+    return user[0];
   }
 
   async hashPassword(password: string): Promise<string> {

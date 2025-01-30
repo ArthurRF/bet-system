@@ -1,15 +1,9 @@
 import { AppError } from '@shared/errors/app.error';
-import { Inject, Service } from 'typedi';
 import { ICreateUserResponse } from '../dtos/create-user.dtos';
 import { IUsersRepository } from '../repository/interfaces/users.repository';
-import { UsersRepository } from '../repository/users.repository';
 
-@Service()
 export class CreateUserUsecase {
-  constructor(
-    @Inject(() => UsersRepository)
-    private usersRepository: IUsersRepository
-  ) {}
+  constructor(private usersRepository: IUsersRepository) {}
 
   async execute(
     username: string,
@@ -24,10 +18,10 @@ export class CreateUserUsecase {
     const passwordHash = await this.usersRepository.hashPassword(password);
     const user = await this.usersRepository.create(username, passwordHash);
 
-    const token = this.usersRepository.generateToken(user.userId);
+    const token = this.usersRepository.generateToken(user.user_id);
 
     return {
-      user_id: user.userId,
+      user_id: user.user_id,
       token,
     };
   }
