@@ -45,7 +45,7 @@ This command will spin up both the frontend and backend services.
 - **Frontend:** A React application served at port `5173`  
 - **Backend:** A Node.js/Express API exposed at port `4000`  
 - **Docker:** Contains `docker-compose.yml` and Dockerfiles for containerization  
-- **Postman Collections:** JSON collections located at the root for API testing
+- **Postman Collection:** JSON collection located at the root for API testing named `bet-system.postman_collection.json`
 
 ---
 
@@ -68,10 +68,9 @@ Below are some technical enhancements that would make this project more robust a
      - Environment variable configuration  
      - Enhanced security settings
 
-3. **Testing Coverage:**
-   - Add unit and integration tests for both the frontend and backend using frameworks like:  
-     - **Frontend:** Jest, React Testing Library  
-     - **Backend:** Supertest, Jest
+3. **Adding Authentication On the Events Routes:**
+	 - Implement authentication middleware to secure the events routes.
+	 - The authentication system is already created, just needs to know which routes need to be protected.
 
 ---
 
