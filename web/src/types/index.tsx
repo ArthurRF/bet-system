@@ -8,3 +8,14 @@ export interface BetFormData {
   eventId: number;
   amount: number;
 }
+
+export interface PaginatedResponse {
+  events: SportEvent[];
+  total_pages: number;
+  pages: number;
+}
+
+export interface LoginResponse {
+  user_id: string;
+  token: string;
+}
