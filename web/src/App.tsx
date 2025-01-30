@@ -1,4 +1,3 @@
-// App.tsx
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { parseCookies } from "nookies";
 import React from "react";

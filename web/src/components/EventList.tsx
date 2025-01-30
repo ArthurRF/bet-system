@@ -1,4 +1,3 @@
-// components/EventList.tsx
 import {
   Box,
   CircularProgress,
