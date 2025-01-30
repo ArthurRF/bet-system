@@ -19,3 +19,8 @@ export interface LoginResponse {
   user_id: string;
   token: string;
 }
+
+export interface RegisterResponse {
+  user_id: string;
+  token: string;
+}

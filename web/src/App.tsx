@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { EventList } from "./components/EventList";
 import Login from "./components/Login";
+import Register from "./components/Register";
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,7 @@ const App: React.FC = () => {
       <CssBaseline />
       <Router>
         <Routes>
+          <Route path="/register" element={<Register />} />
           <Route
             path="/login"
             element={isAuthenticated ? <Navigate to="/events" /> : <Login />}

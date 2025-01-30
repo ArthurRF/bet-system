@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { PaginatedResponse, SportEvent } from "../types";
 import EventListItem from "./EventListItem";
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 5;
 
 export const EventList: React.FC = () => {
   const [events, setEvents] = useState<SportEvent[]>([]);

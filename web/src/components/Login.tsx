@@ -7,6 +7,7 @@ import {
   Container,
   IconButton,
   InputAdornment,
+  Link,
   Paper,
   TextField,
   Typography,
@@ -178,6 +179,7 @@ const Login: React.FC = () => {
               )}
             </Button>
           </Box>
+          <Link href="/register">Don't have an account? Register</Link>
         </Paper>
       </Box>
     </Container>
