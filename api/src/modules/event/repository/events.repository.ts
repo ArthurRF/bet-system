@@ -5,12 +5,22 @@ import { IEventsRepository } from './interfaces/events.repository';
 export class EventsRepository implements IEventsRepository {
   constructor(private dbConnection = DatabaseDataSource) {}
 
-  async list(): Promise<SportEvent[]> {
-    const events: Array<SportEvent> = await this.dbConnection.manager.query(
-      'SELECT * FROM sport_event'
+  async listWithPagination(
+    offset: number,
+    limit: number
+  ): Promise<[SportEvent[], number]> {
+    const events = await this.dbConnection.manager.query(
+      'SELECT * FROM sport_event OFFSET $1 LIMIT $2',
+      [offset, limit]
     );
 
-    return events;
+    const countResult = await this.dbConnection.manager.query(
+      'SELECT COUNT(*) FROM sport_event'
+    );
+
+    const total = parseInt(countResult[0].count, 10);
+
+    return [events, total];
   }
 
   async findById(id: number): Promise<SportEvent | null> {

@@ -17,7 +17,28 @@ export class EventController {
   ) {}
 
   async list(req: Request, res: Response): Promise<Response> {
-    const result = await this.listEventsUsecase.execute();
+    const { page = 1, limit = 10 } = req.query;
+    const parsedPage = parseInt(page as string, 10);
+    const parsedLimit = parseInt(limit as string, 10);
+
+    if (Number.isNaN(parsedPage) || parsedPage <= 0) {
+      throw new AppError(
+        'invalid page value',
+        constants.HTTP_STATUS_BAD_REQUEST
+      );
+    }
+
+    if (Number.isNaN(parsedLimit) || parsedLimit <= 0) {
+      throw new AppError(
+        'invalid limit value',
+        constants.HTTP_STATUS_BAD_REQUEST
+      );
+    }
+
+    const result = await this.listEventsUsecase.execute(
+      parsedPage,
+      parsedLimit
+    );
 
     return res.status(constants.HTTP_STATUS_OK).json(result);
   }

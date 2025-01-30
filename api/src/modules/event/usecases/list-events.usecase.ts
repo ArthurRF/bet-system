@@ -4,13 +4,21 @@ import { IEventsRepository } from '../repository/interfaces/events.repository';
 export class ListEventsUsecase {
   constructor(private eventsRepository: IEventsRepository) {}
 
-  async execute(): Promise<IListEventsResponse[]> {
-    const events = await this.eventsRepository.list();
+  async execute(page: number, limit: number): Promise<IListEventsResponse> {
+    const offset = (page - 1) * limit;
+    const [events, total] = await this.eventsRepository.listWithPagination(
+      offset,
+      limit
+    );
 
-    return events.map(event => ({
-      event_id: event.event_id,
-      event_name: event.event_name,
-      odds: event.odds,
-    }));
+    return {
+      total,
+      total_pages: Math.ceil(total / limit),
+      events: events.map(event => ({
+        event_id: event.event_id,
+        event_name: event.event_name,
+        odds: event.odds,
+      })),
+    };
   }
 }
