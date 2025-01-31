@@ -28,7 +28,7 @@ export class EventsRepository implements IEventsRepository {
       'SELECT * FROM sport_event WHERE event_id = $1',
       [id]
     );
-    return event[0];
+    return event[0] || null;
   }
 
   async create(name: string, odds: number): Promise<SportEvent> {

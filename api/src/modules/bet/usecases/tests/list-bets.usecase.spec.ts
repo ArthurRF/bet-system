@@ -1,7 +1,6 @@
 import { IBetsRepository } from '@modules/bet/repository/interfaces/bets.repository';
 import { ListBetsUsecase } from '../list-bets.usecase';
 
-// Mock data to simulate repository behavior
 const mockBets = [
   { user_id: 'user1', event_id: 123, value: 100 },
   { user_id: 'user2', event_id: 456, value: 200 },
