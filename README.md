@@ -59,9 +59,10 @@ If you'd like to test the API endpoints directly:
 ## 🔧 API Unit Tests
 If you'd like to run the API unit tests:
 1. Open the `api` directory by running `cd api`.
-2. Run `npm install`
-3. Run the tests using `npm test`.
-4. To see coverage, run `npm run test:coverage` and open the report in your browser.
+2. Copy the environment variables from `.env.example` to `.env` using the command `cp .env.example .env`.
+3. Run `npm install`
+4. Run the tests using `npm test`.
+5. To see coverage, run `npm run test:coverage` and open the report in your browser.
 
 ---
 
