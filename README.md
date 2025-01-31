@@ -85,6 +85,9 @@ Below are some technical enhancements that would make this project more robust a
 	 - Add tests for the frontend.
 	 - The current tests are for the API only.
 
+5. **Update Specific Libraries:**
+	 - Update the libraries used in the project one by one.
+
 ---
 
 ## 🧑‍💻 Technical Notes
