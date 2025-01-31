@@ -56,6 +56,15 @@ If you'd like to test the API endpoints directly:
 
 ---
 
+## 🔧 API Unit Tests
+If you'd like to run the API unit tests:
+1. Open the `api` directory by running `cd api`.
+2. Run `npm install`
+3. Run the tests using `npm test`.
+4. To see coverage, run `npm run test:coverage` and open the report in your browser.
+
+---
+
 ## 🌟 Improvement Suggestions
 Below are some technical enhancements that would make this project more robust and production-ready:
 
@@ -71,6 +80,10 @@ Below are some technical enhancements that would make this project more robust a
 3. **Adding Authentication On the Events Routes:**
 	 - Implement authentication middleware to secure the events routes.
 	 - The authentication system is already created, just needs to know which routes need to be protected.
+
+4. **Adding Tests To the Frontend:**
+	 - Add tests for the frontend.
+	 - The current tests are for the API only.
 
 ---
 
