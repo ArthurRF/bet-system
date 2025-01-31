@@ -66,7 +66,7 @@ If you'd like to run the API unit tests:
 ---
 
 ## 🌟 Improvement Suggestions
-Below are some technical enhancements that would make this project more robust and production-ready:
+Below are some technical enhancements that would make this project more robust and production-ready but I was not able to implement in the time I had:
 
 1. **API State Management:**
    - Implement [React Query](https://react-query.tanstack.com/) for efficient data fetching and caching.
